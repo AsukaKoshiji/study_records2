@@ -8,6 +8,7 @@ export default function HomePage() {
   const [progress, setProgress] = useState<ProgressSummary | null>(null);
   const [records, setRecords] = useState<StudyRecord[]>([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true); // 👈 ① ローディング状態を管理するステートを追加（最初はtrue）
 
   useEffect(() => {
     const today = todayString();
@@ -19,9 +20,24 @@ export default function HomePage() {
         setProgress(progressResult);
         setRecords(recordResult);
       })
-      .catch((err: Error) => setError(err.message));
+      .catch((err: Error) => setError(err.message))
+      .finally(() => setLoading(false)); // 👈 ② 成功・失敗に関わらず、通信が終わったらローディングを終了
   }, []);
 
+  // 👈 ③ ローディング中の画面表示を定義
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50" style={{ padding: 40 }}>
+        <div className="text-center">
+          {/* 簡易的なスピナー（CSSクラスが未定義でも動くようインラインスタイルを少し添えています） */}
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600 mx-auto mb-4" style={{ borderTop: "2px solid transparent" }}></div>
+          <p className="page-description" style={{ color: "#4b5563", fontSize: "1.125rem" }}>データを読み込み中...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // 👈 ④ データが読み込まれたら通常のダッシュボード画面を表示
   return (
     <>
       <header className="page-header">
