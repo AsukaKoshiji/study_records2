@@ -1,9 +1,16 @@
+from calendar import monthrange
 from datetime import date
 
 
-def get_month_start(target_date: date) -> date:
-    pass
+def month_start(year: int, month: int) -> date:
+    return date(year, month, 1)
 
 
-def get_month_end(target_date: date) -> date:
-    pass
+def month_end(year: int, month: int) -> date:
+    return date(year, month, monthrange(year, month)[1])
+
+
+def achievement_rate(actual_minutes: int, target_minutes: int | None) -> float | None:
+    if not target_minutes:
+        return None
+    return round(actual_minutes / target_minutes * 100, 2)

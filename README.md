@@ -21,6 +21,18 @@ docker compose up --build
 - Swagger UI: http://localhost:8000/docs
 - Health Check: http://localhost:8000/health
 
+## テスト実行
+
+ローカルではSQLiteのインメモリDBを使ってAPIテストを実行できます。
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/pytest -q
+```
+
+DockerのターゲットランタイムもPython 3.12です。
+
 ## API一覧
 
 ### 学習記録

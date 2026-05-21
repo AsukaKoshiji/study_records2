@@ -1,14 +1,14 @@
 from datetime import date, datetime
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class StudyRecordBase(BaseModel):
     title: str = Field(..., min_length=1, max_length=255)
-    subject: str = Field(..., min_length=1, max_length=100)
+    content: str = Field(..., min_length=1)
+    study_minutes: int = Field(..., gt=0, description="学習時間（分）")
     study_date: date
-    duration_minutes: int = Field(..., gt=0)
-    memo: str | None = Field(default=None, max_length=1000)
+    memo: str | None = None
 
 
 class StudyRecordCreate(StudyRecordBase):
@@ -17,16 +17,15 @@ class StudyRecordCreate(StudyRecordBase):
 
 class StudyRecordUpdate(BaseModel):
     title: str | None = Field(default=None, min_length=1, max_length=255)
-    subject: str | None = Field(default=None, min_length=1, max_length=100)
+    content: str | None = Field(default=None, min_length=1)
+    study_minutes: int | None = Field(default=None, gt=0)
     study_date: date | None = None
-    duration_minutes: int | None = Field(default=None, gt=0)
-    memo: str | None = Field(default=None, max_length=1000)
+    memo: str | None = None
 
 
 class StudyRecordRead(StudyRecordBase):
     id: int
     created_at: datetime
+    updated_at: datetime
 
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = ConfigDict(from_attributes=True)
