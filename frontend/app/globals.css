@@ -1,26 +1,381 @@
-@import "tailwindcss";
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg: #f7f8fa;
+  --panel: #ffffff;
+  --text: #20242c;
+  --muted: #667085;
+  --line: #dfe3ea;
+  --primary: #2364aa;
+  --primary-dark: #194d84;
+  --success: #207f5b;
+  --warning: #b45f06;
+  --danger: #b42318;
+  --sidebar: #17212f;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 248px minmax(0, 1fr);
+}
+
+.sidebar {
+  background: var(--sidebar);
+  color: #ffffff;
+  padding: 24px 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.brand-mark {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.08);
+  font-weight: 700;
+}
+
+.brand-title,
+.brand-subtitle {
+  margin: 0;
+}
+
+.brand-title {
+  font-weight: 700;
+}
+
+.brand-subtitle {
+  color: #b7c2d2;
+  font-size: 12px;
+}
+
+.nav-list {
+  display: grid;
+  gap: 6px;
+}
+
+.nav-link {
+  color: #ecf2fa;
+  padding: 10px 12px;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.main-panel {
+  padding: 28px;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 22px;
+}
+
+.page-title {
+  margin: 0 0 6px;
+  font-size: 28px;
+}
+
+.page-description {
+  margin: 0;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  gap: 18px;
+}
+
+.grid.two {
+  grid-template-columns: minmax(280px, 420px) minmax(0, 1fr);
+}
+
+.grid.four {
+  grid-template-columns: repeat(4, minmax(160px, 1fr));
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+}
+
+.card-title {
+  margin: 0 0 14px;
+  font-size: 18px;
+}
+
+.form-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  color: #344054;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid #c9d1dc;
+  border-radius: 6px;
+  background: #ffffff;
+  padding: 9px 10px;
+  color: var(--text);
+}
+
+.textarea {
+  min-height: 92px;
+  resize: vertical;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.button {
+  min-height: 40px;
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  background: var(--primary);
+  color: #ffffff;
+  padding: 8px 14px;
+  font-weight: 700;
+}
+
+.button:hover {
+  background: var(--primary-dark);
+}
+
+.button.secondary {
+  border-color: #b7c2d2;
+  background: #ffffff;
+  color: #344054;
+}
+
+.button.danger {
+  border-color: var(--danger);
+  background: var(--danger);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid var(--line);
+  padding: 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.table th {
+  color: #475467;
+  font-size: 13px;
+}
+
+.stat {
+  display: grid;
+  gap: 6px;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.stat-value {
+  font-size: 26px;
+  font-weight: 800;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 26px;
+  border-radius: 999px;
+  padding: 3px 10px;
+  background: #eef4ff;
+  color: #174a88;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge.success {
+  background: #ecfdf3;
+  color: var(--success);
+}
+
+.badge.warning {
+  background: #fff7ed;
+  color: var(--warning);
+}
+
+.message {
+  border: 1px solid #b7c2d2;
+  border-radius: 6px;
+  padding: 10px 12px;
+  background: #ffffff;
+  color: #344054;
+}
+
+.message.error {
+  border-color: #f3b6b2;
+  background: #fff4f2;
+  color: var(--danger);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(98px, 1fr));
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+.calendar-head,
+.calendar-day {
+  min-height: 92px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: #ffffff;
+  padding: 9px;
+}
+
+.calendar-head {
+  min-height: 36px;
+  background: #f1f4f8;
+  color: #475467;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.calendar-day.empty {
+  background: #f7f8fa;
+}
+
+.calendar-date {
+  margin-bottom: 8px;
+  font-weight: 800;
+}
+
+.calendar-meta {
+  display: grid;
+  gap: 4px;
+  color: #475467;
+  font-size: 12px;
+}
+
+@media (max-width: 920px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+  }
+
+  .nav-list {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .nav-link {
+    text-align: center;
+  }
+
+  .main-panel {
+    padding: 20px;
+  }
+
+  .grid.two,
+  .grid.four {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-grid {
+    grid-template-columns: repeat(7, minmax(70px, 1fr));
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@media (max-width: 640px) {
+  .nav-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .page-header {
+    display: grid;
+  }
+
+  .calendar-grid {
+    display: block;
+    border-left: 0;
+  }
+
+  .calendar-head {
+    display: none;
+  }
+
+  .calendar-day {
+    border-left: 1px solid var(--line);
+    min-height: 80px;
+  }
+
+  .calendar-day.empty {
+    display: none;
+  }
 }
