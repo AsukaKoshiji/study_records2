@@ -1,0 +1,36 @@
+services:
+  api:
+    build: .
+    container_name: learning-record-api
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: mysql+pymysql://learning_user:learning_password@db:3306/learning_records
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./app:/app/app
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  db:
+    image: mysql:8.4
+    container_name: learning-record-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: learning_records
+      MYSQL_USER: learning_user
+      MYSQL_PASSWORD: learning_password
+      MYSQL_ROOT_PASSWORD: root_password
+      TZ: Asia/Tokyo
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot_password"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+volumes:
+  mysql_data:
