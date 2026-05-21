@@ -5,7 +5,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: mysql+pymysql://learning_user:learning_password@db:3306/learning_records
+     DATABASE_URL: mysql+pymysql://learning_user:learning_pass@db:3306/learning_records
     depends_on:
       db:
         condition: service_healthy
@@ -21,7 +21,7 @@ services:
     environment:
       MYSQL_DATABASE: learning_records
       MYSQL_USER: learning_user
-      MYSQL_PASSWORD: learning_password
+      MYSQL_PASSWORD: learning_pass
       MYSQL_ROOT_PASSWORD: root_password
       TZ: Asia/Tokyo
     volumes:
