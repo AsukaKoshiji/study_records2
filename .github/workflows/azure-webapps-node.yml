@@ -1,4 +1,3 @@
-```yaml
 name: Build and deploy Next.js app to Azure Web App
 
 on:
@@ -61,4 +60,3 @@ jobs:
           app-name: 'study-records-frontend'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_XXXXX }}
           package: release.zip
-```
