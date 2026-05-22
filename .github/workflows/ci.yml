@@ -10,6 +10,23 @@ jobs:
   # 🐍 バックエンド（FastAPI）の自動テスト
   backend-test:
     runs-on: ubuntu-latest
+    
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: learning_records
+          MYSQL_USER: learning_user
+          MYSQL_PASSWORD: learning_pass
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -ulearning_user -plearning_pass"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
     steps:
       - uses: actions/checkout@v4
 
@@ -24,6 +41,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Pytest
+        env:
+          DATABASE_URL: mysql+pymysql://learning_user:learning_pass@127.0.0.1:3306/learning_records
         run: |
           pytest
 
@@ -46,6 +65,9 @@ jobs:
           npm ci
 
       - name: Run Jest
+        # 🌟 CI=true を環境変数に渡すことで、Jestが「1回だけ実行して終了するモード」になり、CIが途中で止まらなくなります
+        env:
+          CI: true
         run: |
           cd frontend
           npm test
