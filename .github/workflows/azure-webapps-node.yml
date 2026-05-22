@@ -1,3 +1,4 @@
+```yaml
 name: Build and deploy Next.js app to Azure Web App
 
 on:
@@ -31,7 +32,7 @@ jobs:
       - name: Zip artifact for deployment
         run: |
           cd frontend
-          zip -r ../release.zip .next public package.json package-lock.json next.config.mjs node_modules
+          zip -r ../release.zip .next public package.json package-lock.json next.config.mjs
 
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
@@ -60,3 +61,4 @@ jobs:
           app-name: 'study-records-frontend'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: release.zip
+```
