@@ -58,5 +58,5 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'study-records-frontend'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_XXXXX }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_STUDY_RECORDS_FRONTEND }}
           package: release.zip
