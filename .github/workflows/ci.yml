@@ -73,5 +73,5 @@ jobs:
         env:
           CI: true
         run: |
-          cd frontend
+          cd app
           npm run lint
