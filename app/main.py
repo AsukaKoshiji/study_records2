@@ -9,6 +9,7 @@ from app.db.session import engine
 
 def create_app(create_tables: bool = True) -> FastAPI:
     if create_tables:
+        pass
        # Base.metadata.create_all(bind=engine)
 
     fastapi_app = FastAPI(
